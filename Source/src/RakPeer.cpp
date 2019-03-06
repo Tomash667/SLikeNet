@@ -3,7 +3,7 @@
  *  All rights reserved.
  *
  *  This source code is licensed under the BSD-style license found in the
- *  RakNet License.txt file in the licenses directory of this source tree. An additional grant 
+ *  RakNet License.txt file in the licenses directory of this source tree. An additional grant
  *  of patent rights can be found in the RakNet Patents.txt file in the same directory.
  *
  *
@@ -184,7 +184,7 @@ Packet *RakPeer::AllocPacket(unsigned dataSize, unsigned char *data, const char 
 	return p;
 }
 
-STATIC_FACTORY_DEFINITIONS(RakPeerInterface,RakPeer) 
+STATIC_FACTORY_DEFINITIONS(RakPeerInterface,RakPeer)
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Constructor
@@ -1593,7 +1593,7 @@ Packet* RakPeer::Receive( void )
 				break;
 			}
 		}
-	
+
 	} while(packet==0);
 
 #ifdef _DEBUG
@@ -3008,7 +3008,7 @@ bool RakPeer::SendOutOfBand(const char *host, unsigned short remotePort, const c
 	{
 		bitStream.Write(data, dataLength);
 	}
-	
+
 	unsigned int realIndex = GetRakNetSocketFromUserConnectionSocketIndex(connectionSocketIndex);
 
 	/*
@@ -3019,7 +3019,7 @@ bool RakPeer::SendOutOfBand(const char *host, unsigned short remotePort, const c
 	unsigned i;
 	for (i=0; i < pluginListNTS.Size(); i++)
 		pluginListNTS[i]->OnDirectSocketSend((const char*)bitStream.GetData(), bitStream.GetNumberOfBitsUsed(), systemAddress);
-	
+
 	SocketLayer::SendTo( socketList[realIndex], (const char*)bitStream.GetData(), (int) bitStream.GetNumberOfBytesUsed(), systemAddress, _FILE_AND_LINE_ );
 	*/
 
@@ -3515,7 +3515,7 @@ void RakPeer::ParseConnectionRequestPacket( RakPeer::RemoteSystemStruct *remoteS
 		SLNet::BitStream bitStream;
 		bitStream.Write((MessageID)ID_INVALID_PASSWORD);
 		bitStream.Write(GetGuidFromSystemAddress(UNASSIGNED_SYSTEM_ADDRESS));
-		SendImmediate((char*) bitStream.GetData(), bitStream.GetNumberOfBytesUsed(), IMMEDIATE_PRIORITY, RELIABLE, 0, systemAddress, false, false, SLNet::GetTimeUS(), 0);
+		SendImmediate((char*) bitStream.GetData(), bitStream.GetNumberOfBytesUsed(), IMMEDIATE_PRIORITY, UNRELIABLE, 0, systemAddress, false, false, SLNet::GetTimeUS(), 0);
 		remoteSystem->connectMode=RemoteSystemStruct::DISCONNECT_ASAP_SILENTLY;
 		return;
 	}
@@ -4187,7 +4187,7 @@ void RakPeer::SendBuffered( const char *data, BitSize_t numberOfBitsToSend, Pack
 		bufferedCommands.Deallocate(bcs, _FILE_AND_LINE_);
 		return;
 	}
-	
+
 	RakAssert( !( reliability >= NUMBER_OF_RELIABILITIES || reliability < 0 ) );
 	RakAssert( !( priority > NUMBER_OF_PRIORITIES || priority < 0 ) );
 	RakAssert( !( orderingChannel >= NUMBER_OF_ORDERED_STREAMS ) );
@@ -4675,7 +4675,7 @@ bool ProcessOfflineNetworkPacket( SystemAddress systemAddress, const char *data,
 			SLNet::Time ping;
 			bsIn.Read(ping);
 			bsIn.Read(packet->guid);
-			
+
 			SLNet::BitStream bsOut((unsigned char*) packet->data, packet->length, false);
 			bsOut.ResetWritePointer();
 			bsOut.Write((unsigned char)ID_UNCONNECTED_PONG);
@@ -6224,7 +6224,7 @@ bool RakPeer::RunUpdateCycle(BitStream &updateBitStream )
 				// To be thread safe, this has to be called in the same thread as HandleSocketReceiveFromConnectedPlayer
 				bitSize = remoteSystem->reliabilityLayer.Receive( &data );
 			}
-		
+
 	}
 
 	return true;
@@ -6316,7 +6316,7 @@ RAK_THREAD_DECLARATION(SLNet::UpdateNetworkLoop)
 		+ cat::AuthenticatedEncryption::OVERHEAD_BYTES
 #endif
 		);
-// 
+//
 	rakPeer->isMainLoopThreadActive = true;
 
 	bool running = true;
