@@ -3,7 +3,7 @@
  *  All rights reserved.
  *
  *  This source code is licensed under the BSD-style license found in the
- *  RakNet License.txt file in the licenses directory of this source tree. An additional grant 
+ *  RakNet License.txt file in the licenses directory of this source tree. An additional grant
  *  of patent rights can be found in the RakNet Patents.txt file in the same directory.
  *
  *
@@ -392,7 +392,7 @@ void SystemAddress::ToString_New(bool writePort, char *dest, size_t destLength, 
 		strcpy_s(dest, destLength, "UNASSIGNED_SYSTEM_ADDRESS");
 		return;
 	}
-	
+
 	if (address.addr4.sin_family==AF_INET)
 	{
 		ret=getnameinfo((struct sockaddr *) &address.addr4, sizeof(struct sockaddr_in), dest, 22, NULL, 0, NI_NUMERICHOST);
@@ -540,16 +540,11 @@ bool SystemAddress::SetBinaryAddress(const char *str, char portDelineator)
 		if (strncasecmp(str,"localhost", 9)==0)
 #endif
 		{
-
-
-
-
-
 			inet_pton(AF_INET, "127.0.0.1", &address.addr4.sin_addr.s_addr);
 
-			if (str[9])
+			if (str[9] == portDelineator)
 			{
-				SetPortHostOrder((unsigned short) atoi(str+9));
+				SetPortHostOrder((unsigned short) atoi(str+10));
 			}
 			return true;
 		}
@@ -737,7 +732,7 @@ bool SystemAddress::FromString(const char *str, char portDelineator, int ipVersi
 			return false;
 	}
 	RakAssert(servinfo);
-	
+
 	unsigned short oldPort = address.addr4.sin_port;
 #if RAKNET_SUPPORT_IPV6==1
 	if (servinfo->ai_family == AF_INET)
