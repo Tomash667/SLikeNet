@@ -1,1 +1,6 @@
+*.user
+*.idb
+*.lib
+*.pdb
 .vs
+Lib/LibStatic/Debug
