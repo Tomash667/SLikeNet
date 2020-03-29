@@ -1,3 +1,4 @@
-+ upgrade toolset version to vs 2017
++ upgrade toolset version to vs 2019
 + using __BITSTREAM_NATIVE_END
 + temporary fix for reconnecting after invalid password
++ fix for different packet (bitstream) buffer received in the client (https://github.com/SLikeSoft/SLikeNet/issues/28)
